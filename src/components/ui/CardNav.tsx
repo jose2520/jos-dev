@@ -26,22 +26,22 @@ interface CardNavProps {
 function GridSnake({ theme }: { theme: string }) {
     const [pathX, setPathX] = useState<number[]>([]);
     const [pathY, setPathY] = useState<number[]>([]);
-    
+
     useEffect(() => {
         const cols = 11; // ~264px max width
         const rows = 6;  // ~144px max height
         const gridSize = 24;
-        
+
         let x = Math.floor(Math.random() * cols) * gridSize;
         let y = Math.floor(Math.random() * rows) * gridSize;
-        
+
         const px = [x];
         const py = [y];
-        
+
         for (let i = 0; i < 40; i++) {
             const isHorizontal = Math.random() > 0.5;
             const step = (Math.random() > 0.5 ? 1 : -1) * gridSize;
-            
+
             if (isHorizontal) {
                 x += step;
                 if (x < 0) x = (cols - 1) * gridSize;
@@ -51,7 +51,7 @@ function GridSnake({ theme }: { theme: string }) {
                 if (y < 0) y = (rows - 1) * gridSize;
                 else if (y >= rows * gridSize) y = 0;
             }
-            
+
             px.push(x);
             py.push(y);
         }
@@ -99,7 +99,7 @@ function ActiveDot({ theme }: { theme: string }) {
 
 function MegaBoxBig({ href, icon: Icon, title, desc, theme, pathname }: any) {
     const isActive = pathname === href || pathname?.startsWith(`${href}/`);
-    
+
     return (
         <Link href={href} className={cn(
             "group relative flex flex-col justify-between rounded-2xl border p-5 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 h-40 overflow-hidden",
@@ -109,7 +109,7 @@ function MegaBoxBig({ href, icon: Icon, title, desc, theme, pathname }: any) {
         )}>
             {/* Subtle Grid Background */}
             <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-            
+
             {/* Random Snake Animation */}
             <GridSnake theme={theme} />
 
@@ -122,7 +122,7 @@ function MegaBoxBig({ href, icon: Icon, title, desc, theme, pathname }: any) {
                 </h4>
                 <p className={cn("text-xs font-medium leading-relaxed transition-colors duration-300", theme === 'dark' ? "text-white/60 group-hover:text-white/80" : "text-black/60 group-hover:text-black/80")}>{desc}</p>
             </div>
-            
+
             {/* Soft Glow overlay on hover */}
             <div className={cn(
                 "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none",
@@ -134,7 +134,7 @@ function MegaBoxBig({ href, icon: Icon, title, desc, theme, pathname }: any) {
 
 function MegaBoxSmall({ href, icon: Icon, title, desc, theme, pathname }: any) {
     const isActive = pathname === href || pathname?.startsWith(`${href}/`);
-    
+
     return (
         <Link href={href} className={cn(
             "group relative flex flex-col justify-center rounded-2xl border p-4 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 overflow-hidden",
@@ -161,7 +161,7 @@ function MegaBoxSmall({ href, icon: Icon, title, desc, theme, pathname }: any) {
 function SidebarLink({ href, icon: Icon, title, desc, theme, pathname }: any) {
     const isChat = href === '#';
     const isActive = pathname === href || (href !== '#' && pathname?.startsWith(`${href}/`));
-    
+
     const className = cn(
         "group flex items-center gap-4 rounded-2xl border p-4 transition-all duration-500 overflow-hidden relative",
         theme === 'dark'
@@ -180,7 +180,7 @@ function SidebarLink({ href, icon: Icon, title, desc, theme, pathname }: any) {
                 <p className={cn("text-[11px] font-medium transition-colors duration-300", theme === 'dark' ? "text-white/60 group-hover:text-white/80" : "text-black/60 group-hover:text-black/80")}>{desc}</p>
             </div>
             <Icon className={cn("w-5 h-5 relative z-10 transition-transform duration-500 group-hover:scale-125 group-hover:-rotate-6", theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white/40 group-hover:text-white/80") : (isActive ? "text-[#8cb815]" : "text-black/40 group-hover:text-black/80"))} />
-            
+
             {/* Subtle highlight */}
             {!isChat && (
                 <div className={cn(
